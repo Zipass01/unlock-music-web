@@ -1,0 +1,9 @@
+[project]
+name = "music-unlock"
+version = "1.0.0"
+description = "本地解密网易云/QQ音乐/酷狗/酷我加密音乐为标准音频格式"
+requires-python = ">=3.10"
+dependencies = [
+    "pycryptodome>=3.20",
+    "mutagen>=1.47",
+]

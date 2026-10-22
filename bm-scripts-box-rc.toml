@@ -1,0 +1,90 @@
+[bmscriptsbox]
+
+[bmscriptsbox.info]
+id = "bfaa6197-b438-431f-ae72-7194ebb4af38"
+name = "加密音乐解锁"
+version = "1.0.0"
+desc = "本地解密网易云/QQ音乐/酷狗/酷我加密音乐 | 支持 ncm,mflac,mgg,kgm,kgma,vpr,kwm 自动识别,一键批量解锁,还原歌名歌手专辑封面,输出 mp3/flac/m4a/ogg/wav 标准格式"
+icon = "./assets/logo.png"
+
+[bmscriptsbox.runtime]
+language = "python"
+language_version = ">=3.10"
+entry = "main.py"
+terminal = "always"
+
+[bmscriptsbox.triggers.context_menu]
+enabled = true
+targets = ["files", "directory"]
+
+[[bmscriptsbox.inputs]]
+name = "target_paths"
+label = "加密音乐"
+type = "list"
+pick = "both"
+exts = [".ncm", ".mflac", ".mflac0", ".mgg", ".mgg0", ".mgg1", ".mggl", ".mmp4", ".qmcflac", ".qmcogg", ".qmc0", ".qmc2", ".qmc3", ".qmc4", ".qmc6", ".qmc8", ".tkm", ".bkcmp3", ".bkcm4a", ".bkcflac", ".bkcwav", ".bkcape", ".bkcogg", ".bkcwma", ".666c6163", ".6d7033", ".6f6767", ".6d3461", ".776176", ".kgm", ".kgma", ".vpr", ".kwm"]
+description = "要解锁的加密音乐文件或目录（目录会递归扫描）"
+
+[[bmscriptsbox.params]]
+name = "output_dir"
+label = "输出目录"
+type = "str"
+default = ""
+description = "解密结果输出目录（相对脚本目录或绝对路径）；留空则输出到原文件所在目录"
+
+[[bmscriptsbox.params]]
+name = "embed_cover"
+label = "嵌入标签封面"
+type = "bool"
+default = true
+description = "是否把歌名/歌手/专辑/封面写入输出文件"
+
+[[bmscriptsbox.params]]
+name = "recursive"
+label = "递归扫描"
+type = "bool"
+default = true
+description = "目录输入时是否递归扫描子目录"
+
+[[bmscriptsbox.params]]
+name = "force"
+label = "强制覆盖"
+type = "bool"
+default = false
+description = "输出已存在时是否覆盖（否则自动加 (1) 后缀）"
+
+[[bmscriptsbox.params]]
+name = "mode"
+label = "模式"
+type = "str"
+default = "simple"
+choices = ["simple", "advanced"]
+choice_labels = { simple = "基础", advanced = "高级" }
+description = "基础模式自动识别并解锁；高级模式可指定密钥材料"
+
+[[bmscriptsbox.params]]
+name = "ekey"
+label = "EKey"
+type = "str"
+default = ""
+when = { field = "mode", eq = "advanced" }
+description = "手动指定 QQ 音乐 EKey（base64 字符串，用于无内嵌密钥的新版文件）"
+
+[[bmscriptsbox.params]]
+name = "ekey_db"
+label = "密钥库路径"
+type = "str"
+default = ""
+when = { field = "mode", eq = "advanced" }
+description = "QQ 音乐安卓端 player_process_db 密钥库路径"
+
+[[bmscriptsbox.params]]
+name = "kgm_key"
+label = "酷狗公钥路径"
+type = "str"
+default = ""
+when = { field = "mode", eq = "advanced" }
+description = "酷狗公钥 kugou_key.xz 路径（默认使用内置）"
+
+[bmscriptsbox.params_form]
+enabled = true
